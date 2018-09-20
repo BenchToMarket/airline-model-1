@@ -1,0 +1,315 @@
+/**
+  * A business network for shipping perishable goods
+  * The cargo is temperature controlled and contracts
+  * can be negociated based on the temperature
+  * readings received for the cargo
+  */
+
+namespace org.acme.airline1
+
+/**
+ * The type of perishable product being shipped
+ */
+enum ClassType {
+  o FIRST
+  o BUSINESS
+  o ECONOMY
+}
+
+/**
+ * The status of a shipment
+ testing changes 2/24
+ testing changes 8/1
+ */
+enum TicketStatus {
+  o AVAIL
+  o RESERVED
+  o SOLD
+}
+
+enum EntityType {
+  o CORP
+  o PERSONAL
+  o AGENT
+}
+
+enum FLightOccupancy {
+  o EMPTY
+  o AVERAGE
+  o FULL
+  o OVERSOLD
+}
+
+// attempting to default buyer in transaction for REST Server
+// will not accet .com 
+/** 
+enum EmailAddress {
+  o eric@email
+  o CORP = 'corp@email.com'
+  o AGENT
+   SUMMER: 'summer',
+}
+*/
+
+/**
+ * A concept for a simple street address
+ */
+concept Address {
+  o String city optional
+  o String country
+  o String street optional
+  o String zip optional
+}
+
+
+
+// **************************
+//  	Assets  / Tickets
+/****************************
+
+ * A shipment being tracked as an asset on the ledger
+ */
+asset Ticket identified by ticketId {
+  o String ticketId
+  o ClassType classType //might get by ref to flightClaass
+  o TicketStatus status
+  o Double purchasePrice optional 
+  o String purchaseDate optional
+  // o Reservation reservation 
+  --> Flight flight           //assigned to which flight
+  --> Passenger pnr optional  //could be corp
+
+
+
+}
+
+
+concept Reservation {
+  o String seat optional
+  o String meal optional
+  o Boolean holdLuggage optional
+}
+
+
+
+/************************
+		Contracts
+ ***********************/
+
+abstract asset Contract identified by contractId {
+  o String contractId
+
+}
+
+// we can create a new contract with different values for each
+// CON_101  50% penaltyBuyBack, 30% percentResale
+// CON_102  30% penaltyBuyBack, 10% percentResale
+// Then we assign each to a flight, 
+
+asset Contract_100 extends Contract {
+  o Integer premiumRemainingSeats
+  o Integer premiumRemainingDays
+  o Double premiumMultiplier
+  
+  o Double penaltyBuyBack // % of tix price to airline
+  o Double percentResale  // % of resale price to airline
+  o Double penaltyTransfer // % of tix price to airline
+
+}
+
+
+/*
+Contracts:
+tiered method
+structure 
+    - variables 
+        - values
+
+1. structures: defined differently for sale, distribution, partners, payment, etc
+  - this is the asset
+  - sales contract may have multiple structures 
+    - ex: one may be for personal pricing
+    - somewhere in flight, we need to define what structures are acceptible 
+2. variables  
+  - what the contract effects, what rules are we defining 
+    - w/i a structure, all variable MUST be same structure, so not to get errors
+3. values
+  - by how much the variables affect
+    - these can vary by flight, so may have many variable for any structure
+    - ex: penaltyBuyBack may be diff for every flight, so new contract is needed
+
+*/
+
+
+
+
+/**************************
+ * 		Participants 
+ **************************/
+
+abstract participant Seller identified by email {
+  o String email
+  o Address address
+  o Double accountBalance  // currency balance 
+}
+
+
+// An Airline is a type of participant 
+participant Airline extends Seller {
+}
+
+/* *******************************
+//	Passengers & Corporate buyers all same
+//	keeps the buyer more agnostic, everyone is the same
+//	might need to abstract and seperate 
+//	but then need to If, Else when buyer, xFering
+// *******************************/
+ participant Passenger identified by email {
+  o String email
+  o EntityType passengerType
+  o Address address
+  o Double accountBalance  // currency balance 
+  o String[] wallet optional
+}
+
+
+/*********************************
+// 			Flights
+// All FLights are participants 
+// so tickets belong to flight
+*********************************/
+
+abstract participant Travel identified by travelId {
+  o String travelId
+  o Double accountBalance  // currency balance by flight
+
+}
+
+participant Flight extends Travel {
+  o String flightNumber
+  o String dateDepart   
+  // o Integer NumIssued
+  // o Integer NumAvail
+  // *** Pricing ***
+  o Double basePriceEconomy
+  o Double basePriceBusiness optional
+  // *** Contracts ***
+  --> Contract_100 contract optional
+}
+
+
+
+
+//***********************
+// 	Transactions 
+//***********************
+
+/*
+* An abstract transaction that is related to a Shipment
+*/
+abstract transaction BuyTransaction {
+  --> Ticket ticket
+}
+
+/*
+*  	Purchasing transactions
+*/
+transaction A11_BuyDirect extends BuyTransaction {
+  o EntityType buyerType	//ONLY for testing
+      
+}
+
+/*
+*  	Transfer transactions
+*/
+
+abstract transaction TransferTix {
+
+  // removing for better order during demo --> Ticket ticket
+
+     
+}
+
+transaction A23_TransferTicket extends TransferTix {
+   --> Ticket ticket
+   --> Passenger newOwner
+    
+}
+
+transaction A25_BackToAirline extends TransferTix {
+   --> Ticket ticket
+}
+
+transaction A21_SellTicket extends TransferTix {
+  // o Double percentDiscount
+  --> Ticket ticket
+  --> Passenger newOwner
+  o FLightOccupancy fLightOccupancy
+
+}
+
+
+
+
+/*
+transaction BuyBulk extends BuyTransaction {
+  o Integer purchaseNum
+  // testing: for corporate purcahses
+  // check for corp discount, quantity 
+      
+}
+
+transaction BuyIntermediary extends BuyTransaction {
+}
+
+transaction BuyMarketplace extends BuyTransaction {
+}
+*/
+
+
+
+
+
+
+/**
+ *  FOR INITIALIZING A DEMO
+ */
+
+transaction A03_IssueTickets {
+  
+}
+
+
+transaction A01_SetupDemo {
+  
+}
+
+
+
+/**
+ * OLD OLD 
+ */
+/*
+abstract participant Purchaser identified by email {
+  o String email
+  o Address address
+  o Double accountBalance  // currency balance 
+}
+
+// Passenger is a type of participant 
+participant Passenger extends Purchaser {
+  // ???????????????
+  // acting as a wallet?
+  // authority of owner should be ticket, passenger just gives reference to tickets in possesion 
+  // ?? might NOT want to list tickets here, just owner in ticket - but like BitCoin, ticket is a bearer asset? 
+  // ?? maybe same as tracking accountBalance (as variable) 
+  ???????????????????
+  --> Ticket[] ticket optional
+}
+
+// Corporation buys tickets for employees
+participant Corporation extends Purchaser {
+  --> Ticket[] ticket optional
+}
+
+*/

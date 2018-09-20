@@ -1,0 +1,9 @@
+
+    .my-header h2 { 
+        display: inline;
+      }
+      .my-header span { 
+        float: right;
+      }
+
+

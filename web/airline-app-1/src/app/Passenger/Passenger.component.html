@@ -1,0 +1,189 @@
+<div class="modal fade" id="addAssetModal" tabindex="-1" role="dialog" aria-labelledby="addAssetModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addAssetModalLabel">Add Passenger</h4>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="modal-body">
+         
+            <div class="form-group text-left">
+              <label for="email">email</label>             
+                <input formControlName="email" type="text" class="form-control">
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="passengerType">Passenger Type</label>             
+                  <textarea formControlName="passengerType" class="form-control" rows="3"></textarea>
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="address.country">Address</label>             
+                  <textarea formControlName="address.country" class="form-control" rows="3"></textarea>
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="accountBalance">accountBalance</label>
+              <!–– input form for optional data -->
+                <input formControlName="accountBalance" type="number" step='any' class="form-control">
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="wallet">Wallet</label>              
+                <input formControlName="wallet" type="text" class="form-control">
+            </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button (click)="addAsset(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="updateAssetModalLabel">Update</h4>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="modal-body">
+          
+            <div class="form-group text-left">
+              <label for="email">email</label>             
+                <input [ngModel]="email"formControlName="email" type="text" class="form-control">
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="passengerType">Passenger Type</label>              
+                  <textarea [ngModel]="passengerType" formControlName="passengerType" class="form-control" rows="3"></textarea>
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="address.country">Address</label>              
+                  <textarea [ngModel]="address.country" formControlName="address.country" class="form-control" rows="3"></textarea>
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="accountBalance">Account Balance</label>             
+                <input [ngModel]="accountBalance" formControlName="accountBalance" type="number" step='any' class="form-control">
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="wallet">Wallet</label>             
+                <input [ngModel]="wallet"formControlName="wallet" type="text" class="form-control">           
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button (click)="updateAsset(myForm)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="deleteAssetModal" tabindex="-1" role="dialog" aria-labelledby="deleteAssetModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="deleteAssetModalLabel">Delete Passenger</h4>
+      </div>
+      <form [formGroup]="myForm" (ngSubmit)="deleteAsset()">
+        <div class="modal-body">
+          Are you sure you want to delete this Passenger?
+        </div>
+        <div class="modal-footer">
+          <button (click)="deleteAsset()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <app-Flight></app-Flight>  -->
+
+<div class="container">
+	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+		<strong>Error:</strong> {{errorMessage}}
+  </div>
+  
+  <div class="my-header">
+      <h2 id='assetNameFlight'>Passengers</h2>
+     <span>
+        <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">Add Passenger</button>
+     </span>
+  </div>
+
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-responsive table-striped">
+        <thead class="thead">
+          <tr class="thead-cols">
+            
+                <th class="info">email</th>
+            
+                <th class="info">Type</th>
+            
+                <th class="info">Address</th>
+            
+                <th class="info">Account <br>Balance</th>
+            
+                <th class="info">Wallet</th>
+            
+              <th class="info">Actions</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asset of allAssets">
+
+            
+                <td>{{asset.email}}</td>
+            
+                <td>{{asset.passengerType}}</td>
+            
+                <td>{{asset.address.country}}</td>
+            
+                <td>{{asset.accountBalance}}</td>
+            
+                <td>{{asset.wallet}}</td>
+            
+            <td>
+              <button (click)="getForm(asset.email);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update</button>
+
+              <button (click)="setId(asset.email);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+  
