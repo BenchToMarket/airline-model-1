@@ -2,6 +2,23 @@ import {Asset} from './org.hyperledger.composer.system';
 import {Participant} from './org.hyperledger.composer.system';
 import {Transaction} from './org.hyperledger.composer.system';
 import {Event} from './org.hyperledger.composer.system';
+
+/* 
+Structure of WebApp Code:
+    main modules:
+        org.airline1.ts             defines Assets
+        data.services.ts            populates Assets
+        app.modules.ts
+        app-routing.modules.ts
+        app.component.html          display
+
+    Asset modules:
+        Passenger.service.ts        requests data
+        Passenger.component.ts      gets & organizes data
+        Passenger.component.html    display / update
+
+*/
+
 // export namespace org.acme.airline1{
    export enum ClassType {
       FIRST,
