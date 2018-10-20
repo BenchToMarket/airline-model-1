@@ -13,6 +13,7 @@ namespace org.acme.airline1
 enum ClassType {
   o FIRST
   o BUSINESS
+  o PREMIUM
   o ECONOMY
 }
 
@@ -71,15 +72,30 @@ concept Address {
  */
 asset Ticket identified by ticketId {
   o String ticketId
-  o ClassType classType //might get by ref to flightClaass
+  o ClassType classType //** remove */
+
   o TicketStatus status
   o Double purchasePrice optional 
   o String purchaseDate optional
   // o Reservation reservation 
   --> Flight flight           //assigned to which flight
   --> Passenger pnr optional  //could be corp
+  --> BookingClass bookingClass 
 
 
+}
+
+asset BookingClass identified by bcId {
+  o String bcId
+  o String bcName
+  o ClassType classType //first, business, premium, economy
+  // Add contracts specific to Class 
+  // Class should define if you 
+  //  pay for baggage or can return a ticket
+  //  penanlty for transfer, free meal, etc
+  --> SC_Change sc_change 
+  // --> SC_Ancillary_100 ancillary_sc optional
+  // Add Use contract 
 
 }
 
@@ -106,7 +122,7 @@ abstract asset Contract identified by contractId {
 // CON_102  30% penaltyBuyBack, 10% percentResale
 // Then we assign each to a flight, 
 
-asset Contract_100 extends Contract {
+asset SC_Pricing extends Contract {
   o Integer premiumRemainingSeats
   o Integer premiumRemainingDays
   o Double premiumMultiplier
@@ -117,6 +133,45 @@ asset Contract_100 extends Contract {
 
 }
 
+asset SC_Change identified by contractId {
+  // might chage name from Change
+  // defines rules after sale, xFer, return, etc
+  o String contractId
+
+  o Boolean canReturn
+  o Boolean canResell
+  o Boolean canTransfer
+  o Boolean canChangeDate
+  o Boolean canChangeTime
+
+  o Double penaltyReturn optional // % of tix price to airline
+  o Double percentResale optional  // % of resale price to airline
+  o Double penaltyTransfer optional // % of tix price to airline
+  o Double changeDate optional  // % of original price
+  o Double changeTime optional // % of original price
+
+}
+
+
+asset SC_Ancillary identified by contractId {
+  // defines rules ancillary products 
+  // seats, meals, baggage
+  // what we can add, how much it costs
+  o String contractId
+  o Double costSeat // dolalr cost
+  o Double costBaggage 
+
+}
+
+
+abstract asset SC_Use identified by contractId {
+  // defines rules use 
+  // how the end-user uses 
+  // maybe how partners can use: an agent can sell, a consolidator can sell
+  // we might have a specific consolidator use_SC 
+  o String contractId
+
+}
 
 /*
 Contracts:
@@ -194,7 +249,7 @@ participant Flight extends Travel {
   o Double basePriceEconomy
   o Double basePriceBusiness optional
   // *** Contracts ***
-  --> Contract_100 contract optional
+  --> SC_Pricing contract optional
 }
 
 
@@ -203,6 +258,19 @@ participant Flight extends Travel {
 //***********************
 // 	Transactions 
 //***********************
+
+/**
+ *  FOR INITIALIZING A DEMO
+ */
+
+transaction A01_SetupDemo {
+  
+}
+
+transaction A03_IssueTickets {
+  
+}
+
 
 /*
 * An abstract transaction that is related to a Shipment
@@ -271,18 +339,6 @@ transaction BuyMarketplace extends BuyTransaction {
 
 
 
-/**
- *  FOR INITIALIZING A DEMO
- */
-
-transaction A03_IssueTickets {
-  
-}
-
-
-transaction A01_SetupDemo {
-  
-}
 
 
 

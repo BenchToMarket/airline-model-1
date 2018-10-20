@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { TicketService } from './Ticket.service';
+//import { FlightService } from './Flight.service';
 import 'rxjs/add/operator/toPromise';
 @Component({
 	selector: 'app-Ticket',
@@ -29,6 +30,7 @@ export class TicketComponent implements OnInit {
       purchaseDate = new FormControl("", Validators.required);
   
       flight = new FormControl("", Validators.required);
+      // flightNumber = new FormControl("", Validators.required);
   
       pnr = new FormControl("", Validators.required);
   
@@ -59,7 +61,8 @@ export class TicketComponent implements OnInit {
     
         
           flight:this.flight,
-        
+          // flightNumber:this.flight.flightnumber,
+
     
         
           pnr:this.pnr
@@ -123,8 +126,7 @@ export class TicketComponent implements OnInit {
       
         
           "flight":this.flight.value,
-        
-      
+          //"flightNumber":this.flightNumber.value,
         
           "pnr":this.pnr.value
         
@@ -245,9 +247,7 @@ export class TicketComponent implements OnInit {
         
           
             "flight":this.flight.value,
-          
-        
-    
+            // "flightNumber":this.flightNumber.value,
         
           
             "pnr":this.pnr.value

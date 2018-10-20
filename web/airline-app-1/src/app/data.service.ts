@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';  
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Configuration } from './configuration';
+
+// rxjs - library for reactive programming using Observables, 
+// to make it easier to compose asynchronous or callback-based code
 
 @Injectable()
 export class DataService<Type> {

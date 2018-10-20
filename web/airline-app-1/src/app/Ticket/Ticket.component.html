@@ -7,78 +7,42 @@
       </div>
       <form [formGroup]="myForm">
         <div class="modal-body">
-
-
-          
+         
             <div class="form-group text-left">
-              <label for="ticketId">ticketId</label>
-
-              
+              <label for="ticketId">ticketId</label>             
                 <input formControlName="ticketId" type="text" class="form-control">
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="classType">classType</label>
-
-              
+              <label for="classType">classType</label>             
                   <textarea formControlName="classType" class="form-control" rows="3"></textarea>
-
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="status">status</label>
-
-              
+              <label for="status">status</label>             
                   <textarea formControlName="status" class="form-control" rows="3"></textarea>
-
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="purchasePrice">purchasePrice</label>
-
-              
+              <label for="purchasePrice">purchasePrice</label>             
                 <input formControlName="purchasePrice" type="number" step='any' class="form-control">
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="purchaseDate">purchaseDate</label>
-
-              
+              <label for="purchaseDate">purchaseDate</label>             
                 <input formControlName="purchaseDate" type="text" class="form-control">
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="flight">flight</label>
-
-              
+              <label for="flight">flight</label>           
                   <textarea formControlName="flight" class="form-control" rows="3"></textarea>
-
-              
-
-            </div>
+           </div>
           
             <div class="form-group text-left">
-              <label for="pnr">pnr</label>
-
-              
+              <label for="pnr">pnr</label>             
                   <textarea formControlName="pnr" class="form-control" rows="3"></textarea>
-
-              
-
             </div>
           
-
-
         </div>
         <div class="modal-footer">
           <button (click)="addAsset(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
@@ -90,7 +54,7 @@
 </div>
 
 
-
+<!--  removed update option and form to make simpler 
 
 <div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
   <div class="modal-dialog" role="document">
@@ -101,74 +65,42 @@
       </div>
       <form [formGroup]="myForm">
         <div class="modal-body">
-
-
-          
+     
             <div class="form-group text-left">
-              <label for="ticketId">ticketId</label>
-
-              
+              <label for="ticketId">ticketId</label>             
                 <input [ngModel]="ticketId"formControlName="ticketId" type="text" class="form-control">
-              
-
-            </div>
+           </div>
           
             <div class="form-group text-left">
-              <label for="classType">classType</label>
-
-              
+              <label for="classType">classType</label>             
                   <textarea [ngModel]="classType" formControlName="classType" class="form-control" rows="3"></textarea>
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="status">status</label>
-
-              
+              <label for="status">status</label>             
                   <textarea [ngModel]="status" formControlName="status" class="form-control" rows="3"></textarea>
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="purchasePrice">purchasePrice</label>
-
-              
+              <label for="purchasePrice">purchasePrice</label>           
                 <input [ngModel]="purchasePrice" formControlName="purchasePrice" type="number" step='any' class="form-control">
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="purchaseDate">purchaseDate</label>
-
-              
+              <label for="purchaseDate">purchaseDate</label>             
                 <input [ngModel]="purchaseDate"formControlName="purchaseDate" type="text" class="form-control">
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="flight">flight</label>
-
-              
+              <label for="flight">flight</label>            
                   <textarea [ngModel]="flight" formControlName="flight" class="form-control" rows="3"></textarea>
-              
-
             </div>
           
             <div class="form-group text-left">
-              <label for="pnr">pnr</label>
-
-              
+              <label for="pnr">pnr</label>            
                   <textarea [ngModel]="pnr" formControlName="pnr" class="form-control" rows="3"></textarea>
-              
-
             </div>
           
-
-
         </div>
         <div class="modal-footer">
           <button (click)="updateAsset(myForm)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
@@ -202,7 +134,7 @@
 </div>
 
 
-
+-->
 
 
 
