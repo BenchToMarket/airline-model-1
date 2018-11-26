@@ -11,10 +11,10 @@ namespace org.acme.airline1
  * The type of perishable product being shipped
  */
 enum ClassType {
-  o FIRST
-  o BUSINESS
-  o PREMIUM
-  o ECONOMY
+  o First
+  o Business
+  o Premium
+  o Economy
 }
 
 /**
@@ -35,10 +35,11 @@ enum EntityType {
 }
 
 enum FLightOccupancy {
-  o EMPTY
-  o AVERAGE
-  o FULL
-  o OVERSOLD
+  // changing to Utilization 
+  o Empty
+  o Average
+  o Full
+  o Oversold
 }
 
 // attempting to default buyer in transaction for REST Server
@@ -62,6 +63,29 @@ concept Address {
   o String zip optional
 }
 
+/**
+ * A concept to insert in ClassPrice Martix
+ */
+concept ClassPrice {
+  o String bcId 
+  o String bcName   //for display only
+  o Double bcBase 
+  o Double bcPrice 
+  o Integer bcIssue
+  o Integer bcAvail
+  o Integer bcCapacity // 1-10 (1 is empty, 10 is highest)
+ 
+}
+
+
+asset ClassPriceMatrix identified by cpMatrixId {
+o String cpMatrixId 
+// should be dynamic, but this will be off-chain, so works for now
+o ClassPrice classPriceFirst
+o ClassPrice classPriceEconomy
+
+}
+
 
 
 // **************************
@@ -72,15 +96,24 @@ concept Address {
  */
 asset Ticket identified by ticketId {
   o String ticketId
-  o ClassType classType //** remove */
 
-  o TicketStatus status
+  // might make below 2 just id (for dynamic) 
+  --> Flight flight           
+  --> BookingClass bookingClass 
+
+  // may adjust xFer price to base OR purchase price
+  // don't think we need date on ticket  
   o Double purchasePrice optional 
   o String purchaseDate optional
-  // o Reservation reservation 
-  --> Flight flight           //assigned to which flight
+
+  // should track with fligt matrix
+  // need to verify owner / wallet for xFer
   --> Passenger pnr optional  //could be corp
-  --> BookingClass bookingClass 
+
+  // below for demo puposes, for easy frontend
+  o ClassType classType // remove later
+  o TicketStatus status // track in flight matrix with pnr
+    // MVP: status means nothings, tracked in PSS
 
 
 }
@@ -123,17 +156,24 @@ abstract asset Contract identified by contractId {
 // Then we assign each to a flight, 
 
 asset SC_Pricing extends Contract {
-  o Integer premiumRemainingSeats
-  o Integer premiumRemainingDays
-  o Double premiumMultiplier
-  
+  o Integer days //premiumRemainingDays
+  o Integer capacityOver //premium if over threshold 
+  o Integer capacityUnder // discount if under threshold 
+
+  o Double premium
+  o Double discount 
+
+  /*
   o Double penaltyBuyBack // % of tix price to airline
   o Double percentResale  // % of resale price to airline
   o Double penaltyTransfer // % of tix price to airline
-
+  */
 }
 
 asset SC_Change identified by contractId {
+  // **** need to change (by flight & booking class)
+  // **** make an array of SC(class) that can be selected by flight ??
+  
   // might chage name from Change
   // defines rules after sale, xFer, return, etc
   o String contractId
@@ -144,15 +184,15 @@ asset SC_Change identified by contractId {
   o Boolean canChangeDate
   o Boolean canChangeTime
 
-  o Double penaltyReturn optional // % of tix price to airline
-  o Double percentResale optional  // % of resale price to airline
-  o Double penaltyTransfer optional // % of tix price to airline
-  o Double changeDate optional  // % of original price
-  o Double changeTime optional // % of original price
+  o Double penaltyReturn // optional // % of tix price to airline
+  o Double percentResale // optional  // % of resale price to airline
+  o Double penaltyTransfer // optional // % of tix price to airline
+  o Double changeDate // optional  // % of original price
+  o Double changeTime // optional // % of original price
 
 }
 
-
+/*
 asset SC_Ancillary identified by contractId {
   // defines rules ancillary products 
   // seats, meals, baggage
@@ -160,8 +200,8 @@ asset SC_Ancillary identified by contractId {
   o String contractId
   o Double costSeat // dolalr cost
   o Double costBaggage 
-
 }
+
 
 
 abstract asset SC_Use identified by contractId {
@@ -170,8 +210,9 @@ abstract asset SC_Use identified by contractId {
   // maybe how partners can use: an agent can sell, a consolidator can sell
   // we might have a specific consolidator use_SC 
   o String contractId
-
 }
+not sure: should be asset
+*/
 
 /*
 Contracts:
@@ -234,22 +275,24 @@ participant Airline extends Seller {
 // so tickets belong to flight
 *********************************/
 
-abstract participant Travel identified by travelId {
+abstract asset Travel identified by travelId {
   o String travelId
   o Double accountBalance  // currency balance by flight
 
 }
 
-participant Flight extends Travel {
+asset Flight extends Travel {
   o String flightNumber
   o String dateDepart   
+  o String segment
   // o Integer NumIssued
   // o Integer NumAvail
   // *** Pricing ***
   o Double basePriceEconomy
   o Double basePriceBusiness optional
   // *** Contracts ***
-  --> SC_Pricing contract optional
+  --> SC_Pricing sc_pricing optional
+  --> ClassPriceMatrix classPriceMatrix optional 
 }
 
 
@@ -286,6 +329,18 @@ transaction A11_BuyDirect extends BuyTransaction {
   o EntityType buyerType	//ONLY for testing
       
 }
+
+
+
+transaction BuyDynamic {
+  --> Flight flight
+  // o String travelId
+   o String bcId 
+
+}
+
+
+
 
 /*
 *  	Transfer transactions
