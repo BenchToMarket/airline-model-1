@@ -1,19 +1,50 @@
-# Perishable Goods Network
+# Bearable Airline Ticket
 
-> Example business network that shows growers, shippers and importers defining contracts for the price of perishable goods, based on temperature readings received for shipping containers.
+> Proof of Concept for Airline tickets as non-fungible assets.
 
-The business network defines a contract between growers and importers. The contract stipulates that: On receipt of the shipment the importer pays the grower the unit price x the number of units in the shipment. Shipments that arrive late are free. Shipments that have breached the low temperate threshold have a penalty applied proportional to the magnitude of the breach x a penalty factor. Shipments that have breached the high temperate threshold have a penalty applied proportional to the magnitude of the breach x a penalty factor.
+Designed for Corporations to buy tickets in bulk, in advance, without placing any passenger details on the ticket. This allows the corporation to seamlessly assign or change employee to ticket up to the "Day of Travel". The corporation can also change dates, times or segments as well as return without any needed involvement from the Airline. Any ticket may be transfered between employees or later sold on a P2P marketplace.
+
+The transfer, return or resale terms are defined in the smart contracts attached to the blockchain fligth or ticket. The terms include allowance of any transfer, return or resale. The terms also include any penalty which will be automatically (by smart contract) disrtibuted back to the airline. All terms and panalty are set by the airline.
+
+In this Proof of Concept we can:
+ - Create Flights
+ - Create Tickets for each flight
+ - Create & Assign Modular Smart Contracts 
+ - List available tickets & prices
+ - Set prices Dynamically
+ - Purchase Tickets
+ - Create ticket dynamically to sync Airline inventory
+ - Assign ticket to a Digital Wallet
+ - Transfer ticket
+ - Return Ticket (w/ penalty going to airline)
+ - Resell ticket (w/ penalty going to airline)
 
 This business network defines:
 
 **Participants**
-`Grower` `Importer` `Shipper`
+`Airline` `Passenger` `Corporation`
 
 **Assets**
-`Contract` `Shipment`
+`Flight` `Ticket`
+Tickets belong to a specific flight
+
+**Smart COntracts**
+Assigned to FLight, Ticket or BookingClass
+`BookingClass`  - to Ticket
+`SC_Pricing`    - to FLight, controls dynamic pricing based capacity
+`SC_Change`     - to BookingClass, controls transfer & penalty
+
 
 **Transactions**
-`TemperatureReading` `ShipmentReceived` `SetupDemo`
+`SetupDemo`       - populates basic assets, SC
+`BuyDynamic`      - MVP for Airlines, create tix AFTER sold
+`TransferTix`     - from one entity to another
+                  - may be xFer, resell or return
+
+`IssueTickets`     - Issues a set of test tickets
+
+
+
 
 To test this Business Network Definition in the **Test** tab:
 
@@ -36,18 +67,5 @@ Submit a `TemperatureReading` transaction:
   "shipment": "resource:org.acme.shipping.perishable.Shipment#SHIP_001"
 }
 ```
-
-If the temperature reading falls outside the min/max range of the contract, the price received by the grower will be reduced. You may submit several readings if you wish. Each reading will be aggregated within `SHIP_001` Shipment Asset Registry.
-
-Submit a `ShipmentReceived` transaction for `SHIP_001` to trigger the payout to the grower, based on the parameters of the `CON_001` contract:
-
-```
-{
-  "$class": "org.acme.shipping.perishable.ShipmentReceived",
-  "shipment": "resource:org.acme.shipping.perishable.Shipment#SHIP_001"
-}
-```
-
-If the date-time of the `ShipmentReceived` transaction is after the `arrivalDateTime` on `CON_001` then the grower will no receive any payment for the shipment.
 
 Congratulations!
