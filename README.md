@@ -1,4 +1,4 @@
-# Bearable Airline Ticket
+# Bearer Asset - Airline Ticket
 
 > Proof of Concept for Airline tickets as non-fungible assets.
 
