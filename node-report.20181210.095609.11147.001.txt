@@ -1,0 +1,198 @@
+================================================================================
+==== Node Report ===============================================================
+
+Event: exception, location: "OnUncaughtException"
+Filename: node-report.20181210.095609.11147.001.txt
+Dump event time:  2018/12/10 09:56:09
+Module load time: 2018/12/10 09:56:09
+Process ID: 11147
+Command line: node /home/osboxes/.nvm/versions/node/v8.14.0/bin/composer archive list -a airline-model-1 
+
+Node.js version: v8.14.0
+(http_parser: 2.8.0, v8: 6.2.414.72, uv: 1.23.2, zlib: 1.2.11, ares: 1.10.1-DEV,
+ modules: 57, nghttp2: 1.33.0, napi: 3, openssl: 1.0.2q, icu: 60.1, unicode: 10.0,
+ cldr: 32.0, tz: 2017c)
+
+node-report version: 2.2.1 (built against Node.js v8.14.0, glibc 2.23, 64 bit)
+
+OS version: Linux 4.8.0-36-generic #36~16.04.1-Ubuntu SMP Sun Feb 5 09:39:57 UTC 2017
+(glibc: 2.23)
+
+Machine: osboxes x86_64
+
+================================================================================
+==== JavaScript Stack Trace ====================================================
+
+Object.parseArgs [as _parseArgs] (/home/osboxes/.nvm/versions/node/v8.14.0/lib/node_modules/composer-cli/node_modules/yargs/yargs.js:1100:12)
+Object.get [as argv] (/home/osboxes/.nvm/versions/node/v8.14.0/lib/node_modules/composer-cli/node_modules/yargs/yargs.js:957:21)
+Object.<anonymous> (/home/osboxes/.nvm/versions/node/v8.14.0/lib/node_modules/composer-cli/cli.js:36:5)
+Module._compile (module.js:653:30)
+Object.Module._extensions..js (module.js:664:10)
+Module.load (module.js:566:32)
+tryModuleLoad (module.js:506:12)
+Function.Module._load (module.js:498:3)
+Function.Module.runMain (module.js:694:10)
+startup (bootstrap_node.js:204:16)
+bootstrap_node.js:625:3
+
+================================================================================
+==== Native Stack Trace ========================================================
+
+ 0: [pc=0x7f0aa8dc956b] nodereport::OnUncaughtException(v8::Isolate*) [/home/osboxes/.nvm/versions/node/v8.14.0/lib/node_modules/composer-cli/node_modules/node-report/api.node]
+ 1: [pc=0xeaf642] v8::internal::Isolate::Throw(v8::internal::Object*, v8::internal::MessageLocation*) [node]
+ 2: [pc=0x1028f0d] v8::internal::Runtime_Throw(int, v8::internal::Object**, v8::internal::Isolate*) [node]
+ 3: [pc=0x3444382842fd] 
+
+================================================================================
+==== JavaScript Heap and Garbage Collector =====================================
+
+Heap space name: new_space
+    Memory size: 16,777,216 bytes, committed memory: 16,716,936 bytes
+    Capacity: 8,249,344 bytes, used: 7,467,768 bytes, available: 781,576 bytes
+Heap space name: old_space
+    Memory size: 17,625,088 bytes, committed memory: 16,273,016 bytes
+    Capacity: 16,427,936 bytes, used: 15,975,960 bytes, available: 451,976 bytes
+Heap space name: code_space
+    Memory size: 2,097,152 bytes, committed memory: 1,397,760 bytes
+    Capacity: 1,332,224 bytes, used: 1,332,224 bytes, available: 0 bytes
+Heap space name: map_space
+    Memory size: 1,593,344 bytes, committed memory: 1,258,896 bytes
+    Capacity: 1,543,144 bytes, used: 1,224,080 bytes, available: 319,064 bytes
+Heap space name: large_object_space
+    Memory size: 2,928,640 bytes, committed memory: 2,928,640 bytes
+    Capacity: 1,461,306,528 bytes, used: 2,872,992 bytes, available: 1,458,433,536 bytes
+
+Total heap memory size: 41,021,440 bytes
+Total heap committed memory: 38,575,248 bytes
+Total used heap memory: 28,873,024 bytes
+Total available heap memory: 1,459,986,152 bytes
+
+Heap memory limit: 1,501,560,832
+
+================================================================================
+==== Resource Usage ============================================================
+
+Process total resource usage:
+  User mode CPU: 0.712000 secs
+  Kernel mode CPU: 0.064000 secs
+  Average CPU Consumption : 77.6%
+  Maximum resident set size: 65,568,768 bytes
+  Page faults: 0 (I/O required) 15899 (no I/O required)
+  Filesystem activity: 0 reads 8 writes
+
+Event loop thread resource usage:
+  User mode CPU: 0.664000 secs
+  Kernel mode CPU: 0.060000 secs
+  Average CPU Consumption : 72.4%
+  Filesystem activity: 0 reads 8 writes
+
+================================================================================
+==== Node.js libuv Handle Summary ==============================================
+
+(Flags: R=Ref, A=Active)
+Flags  Type      Address             Details
+[-A]   async     0x00000000030833b0  
+[--]   check     0x00007ffef850cc20  
+[R-]   idle      0x00007ffef850cc98  
+[--]   prepare   0x00007ffef850cd10  
+[--]   check     0x00007ffef850cd88  
+[-A]   async     0x0000000002183760  
+[-A]   async     0x00000000030b1270  
+[-A]   async     0x00000000030b09a0  
+[R-]   timer     0x00000000030b0a30  repeat: 0, timeout expired: 122391722 ms ago
+[R-]   tty       0x0000000003094df8  width: 80, height: 24, file descriptor: 9, write queue size: 0, readable, writable
+[-A]   signal    0x0000000003094f90  signum: 28 (SIGWINCH)
+[R-]   tty       0x000000000309a718  width: 80, height: 24, file descriptor: 11, write queue size: 0, readable, writable
+[-A]   async     0x000000000309a0c0  
+[-A]   async     0x000000000309a150  
+[-A]   async     0x0000000003099d20  
+[-A]   async     0x000000000309a270  
+[-A]   async     0x0000000003105880  
+[-A]   async     0x00000000031282d0  
+[-A]   async     0x00000000030af020  
+[-A]   async     0x00000000030b0480  
+[-A]   async     0x0000000003117b40  
+[-A]   async     0x00007f0aa8fd1cc0  
+
+================================================================================
+==== System Information ========================================================
+
+Environment variables
+  XDG_VTNR=2
+  SSH_AGENT_PID=1897
+  XDG_SESSION_ID=1
+  CLUTTER_IM_MODULE=xim
+  NVM_CD_FLAGS=
+  TERM=xterm-256color
+  SHELL=/bin/bash
+  XDG_MENU_PREFIX=gnome-
+  VTE_VERSION=4205
+  QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+  GJS_DEBUG_OUTPUT=stderr
+  WINDOWID=31466956
+  GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+  GTK_MODULES=gail:atk-bridge
+  NVM_DIR=/home/osboxes/.nvm
+  USER=osboxes
+  LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36::ow=1;34:tw=1;34:
+  QT_ACCESSIBILITY=1
+  SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+  SESSION_MANAGER=local/osboxes:@/tmp/.ICE-unix/1766,unix/osboxes:/tmp/.ICE-unix/1766
+  USERNAME=osboxes
+  DEFAULTS_PATH=/usr/share/gconf/gnome.default.path
+  XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg
+  PATH=/home/osboxes/.nvm/versions/node/v8.14.0/bin:/home/osboxes/bin:/home/osboxes/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  DESKTOP_SESSION=gnome
+  QT_IM_MODULE=ibus
+  XDG_SESSION_TYPE=x11
+  PWD=/home/osboxes/composer-hp/projects/airline-model-1
+  XMODIFIERS=@im=ibus
+  LANG=en_US.UTF-8
+  MANDATORY_PATH=/usr/share/gconf/gnome.mandatory.path
+  GDMSESSION=gnome
+  XDG_SEAT=seat0
+  HOME=/home/osboxes
+  SHLVL=1
+  GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+  XDG_SESSION_DESKTOP=gnome
+  LOGNAME=osboxes
+  XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+  QT4_IM_MODULE=xim
+  DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-ktxCFmseZs,guid=d22ec84e69dbc498e0012a515c0abaec
+  NVM_BIN=/home/osboxes/.nvm/versions/node/v8.14.0/bin
+  LESSOPEN=| /usr/bin/lesspipe %s
+  WINDOWPATH=2
+  XDG_RUNTIME_DIR=/run/user/1000
+  DISPLAY=:1
+  XDG_CURRENT_DESKTOP=GNOME
+  GTK_IM_MODULE=ibus
+  LESSCLOSE=/usr/bin/lesspipe %s %s
+  XAUTHORITY=/run/user/1000/gdm/Xauthority
+  OLDPWD=/home/osboxes/composer-hp/projects/airline-model-1/dist
+  _=/home/osboxes/.nvm/versions/node/v8.14.0/bin/composer
+  SUPPRESS_NO_CONFIG_WARNING=y
+
+Resource limits                        soft limit      hard limit
+  core file size (blocks)                       0       unlimited
+  data seg size (kbytes)                unlimited       unlimited
+  file size (blocks)                    unlimited       unlimited
+  max locked memory (bytes)                 65536           65536
+  max memory size (kbytes)              unlimited       unlimited
+  open files                              1048576         1048576
+  stack size (bytes)                      8388608       unlimited
+  cpu time (seconds)                    unlimited       unlimited
+  max user processes                        15638           15638
+  virtual memory (kbytes)               unlimited       unlimited
+
+Loaded libraries
+  /lib/x86_64-linux-gnu/libdl.so.2
+  /lib/x86_64-linux-gnu/librt.so.1
+  /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+  /lib/x86_64-linux-gnu/libm.so.6
+  /lib/x86_64-linux-gnu/libgcc_s.so.1
+  /lib/x86_64-linux-gnu/libpthread.so.0
+  /lib/x86_64-linux-gnu/libc.so.6
+  /lib64/ld-linux-x86-64.so.2
+  /home/osboxes/.nvm/versions/node/v8.14.0/lib/node_modules/composer-cli/node_modules/node-report/api.node
+
+================================================================================
